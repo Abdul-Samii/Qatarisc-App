@@ -4,7 +4,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Header } from '../../components';
 import { COLORS, hp, IMAGES, wp } from '../../constants';
 
-const Inbox = () =>{
+const Inbox = ({navigation}) =>{
     const onlineUsers = [
         {name:"Gian Lorenzo",dp:IMAGES.user1},
         {name:"Natalie Dormer",dp:IMAGES.user1},
@@ -24,7 +24,7 @@ const Inbox = () =>{
 
     const handleFlatList = (item) =>{
         return(
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate("chat")}>
             <View style={Styles.messageRow}>
                     <Image source={item.dp} style={Styles.imgMsg}/>
                     <View style={Styles.middle}>
