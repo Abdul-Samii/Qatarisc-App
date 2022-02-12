@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View,StatusBar } from 'react-native'
 import { COLORS, ICONS, wp,hp } from '../constants'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Home, Inbox, Profile } from '../screens';
+import { Home, HowandWhere, Inbox, Notifications, Profile } from '../screens';
 import { NavigationContainer } from '@react-navigation/native';
 const Tab = createBottomTabNavigator();
 
@@ -56,9 +56,9 @@ const BottomTabs = () => {
     
     >
       <Tab.Screen name='freestuff'  component={Home} options={{headerShown:false,title:"Free Stuff"}} />
-      <Tab.Screen name="how&where" component={Home} options={{headerShown:false,title:"How & Where"}}/>
+      <Tab.Screen name="how&where" component={HowandWhere} options={{headerShown:false,title:"How & Where"}}/>
       <Tab.Screen name="messages" component={Inbox} options={{headerShown:false,title:"Messages"}}/>
-      <Tab.Screen name="notifications" component={Home} options={{headerShown:false,title:"Notifications"}}/>
+      <Tab.Screen name="notifications" component={Notifications} options={{headerShown:false,title:"Notifications"}}/>
       <Tab.Screen name="profile" component={Profile} options={{headerShown:false,title:"Profile"}}/>
     </Tab.Navigator >
   
