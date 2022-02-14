@@ -37,7 +37,7 @@ const Home = ({navigation}) =>{
         setLikenum(item.likes)
     }
     const handleFlatlist=(item)=>{
-        LikeCount(item)
+        // LikeCount(item)
         return(
             <View style={Styles.post}>
                 

@@ -1,16 +1,51 @@
-import React from 'react'
+import React,{useState} from 'react'
 import {View, Text, StyleSheet, TouchableOpacity, StatusBar, TextInput, Image} from 'react-native'
-import { HeaderHome } from '../../components'
+import { Button, HeaderHome } from '../../components'
 import { COLORS, hp, wp,ICONS, IMAGES } from '../../constants'
+import { connect } from 'react-redux';
+import { CreatePost } from '../../store/actions';
 
-const NewPost = () =>{
+
+
+const NewPost = (props) =>{
+    const [type,setType] = useState(true)
+    const [text,setText] = useState()
+    const [userId,setUserIs] = useState("1223abc")
+    const handleType=()=>{
+        setType(!type);
+    }
+
+
+    const newPost=()=>{
+        const obj={
+            text,
+            userId
+        }
+        props.CreatePost(obj);
+    }
+    console.log(text)
     return(
         <View>
             <View style={Styles.postNew}>
-                <View style={Styles.flex}>
+            <TouchableOpacity onPress={()=>handleType()}><View style={Styles.flex}>
                     <Image source={IMAGES.user1} style={Styles.userImg}/>
-                    <Text style={Styles.topText}>WHAT'S ON YOUR MIND?</Text>
-                </View>
+                        {type?<Text style={Styles.topText}>WHAT'S ON YOUR MIND?</Text>
+                        :
+                        <View style={{flexDirection:'row'}}>
+                        <TextInput
+                            value={text}
+                            onChangeText={(item)=>setText(item)}
+                            placeholder='Type...' 
+                            multiline
+                            style={{marginTop:hp(4),marginLeft:wp(5),width:wp(65),height:hp(8)}}
+                        />
+                        <TouchableOpacity style={{marginLeft:wp(-5),marginTop:hp(1)}} onPress={()=>newPost()}><Text style={{fontSize:12}}>Post</Text></TouchableOpacity>
+                        </View>
+                            
+                        }
+                </View>           
+                         </TouchableOpacity>
+
                 <TouchableOpacity style={Styles.newImg}>
                     <ICONS.MaterialCommunityIcons name="image-plus" size={22} style={{marginLeft:wp(40),marginTop:hp(1)}}/>
                     <Text style={{fontSize:16,marginLeft:wp(2),marginTop:hp(1)}}>Photo</Text>
@@ -20,7 +55,16 @@ const NewPost = () =>{
     )
 }
 
-export default NewPost
+
+
+const mapStateToProps = props => {
+    // console.log("HERE "+props.user.users)
+    return {
+        msg:  props.user.msg
+      
+    }
+}
+export default connect(mapStateToProps,{CreatePost})(NewPost)
 
 const Styles = StyleSheet.create({
     container:{

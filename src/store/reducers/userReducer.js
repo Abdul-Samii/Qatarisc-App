@@ -1,0 +1,21 @@
+import { types } from "../actionTypes";
+
+const initialState = {
+    isLoading:false,
+    msg:'',
+};
+
+export const userReducer = (state=initialState,{type,payload})=>{
+    switch(type){
+        case types.CREATE_POST_START:
+            return {...state, isLoading:true}
+        case types.CREATE_POST_SUCCESS:
+            return {...state, isLoading:false, msg:payload}
+        case types.CREATE_POST_FAILED:
+            return {...state, isLoading:false}
+        
+        
+        default:
+            return state; 
+    }
+}
