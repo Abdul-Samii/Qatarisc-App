@@ -17,8 +17,9 @@ const Profile = () =>{
         {dp:IMAGES.user1,username:"James Bond",time:"2h",commentText:"Hi there, I am intrested kindly DM me.",postImg:IMAGES.background1,likes:12},
         
     ]
+
     return(
-        <ScrollView>
+        <ScrollView style={Styles.container}>
             <Header title="PROFILE"/>
 
             <View style={Styles.header2}>
@@ -60,7 +61,7 @@ const Profile = () =>{
             <Text style={Styles.heading}>Settings</Text>
             <View style={Styles.colorRow}>
                 <Text style={Styles.letOthers}>Let Others Message Me</Text>
-                <Text style={{fontWeight:'bold',color:COLORS.white,marginLeft:wp(8)}}>Yes</Text>
+                <Text style={{fontWeight:'bold',color:COLORS.font1,marginLeft:wp(8)}}>Yes</Text>
             </View>
 
 {/* Comments */}
@@ -92,6 +93,7 @@ const Profile = () =>{
                     btnStyle={Styles.btnStyle}
                 />
             </View>
+            <View style={{height:hp(3)}}/>
 
         </ScrollView>
     )
@@ -100,6 +102,10 @@ const Profile = () =>{
 export default Profile
 
 const Styles = StyleSheet.create({
+    container:{
+        backgroundColor:COLORS.white,
+        height:'100%'
+    },
     userdp:{
         height:hp(10),
         width:wp(18),
@@ -118,7 +124,7 @@ const Styles = StyleSheet.create({
     },
     personalInfo:{
         height:hp(36),
-        backgroundColor:COLORS.facebook1,
+        backgroundColor:COLORS.profile,
         marginTop:hp(1)
     },
     row:{
@@ -129,23 +135,23 @@ const Styles = StyleSheet.create({
         marginTop:hp(2)
     },
     leftItem:{
-        color:COLORS.offwhite,
+        color:COLORS.facebook1,
         fontWeight:'bold',
         marginLeft:wp(8),
         position:'absolute'
     },
     rightItem:{
-        color:COLORS.white,
+        color:COLORS.font1,
         fontWeight:'bold',
         marginLeft:wp(40)
     },
     colorRow:{
-        backgroundColor:COLORS.facebook1,
+        backgroundColor:COLORS.profile,
         height:hp(7),
         marginTop:hp(1.5)
     },
     letOthers:{
-        color:COLORS.offwhite,
+        color:COLORS.facebook1,
         fontWeight:'bold',
         marginLeft:wp(8),
         marginTop:hp(1)
@@ -162,8 +168,9 @@ const Styles = StyleSheet.create({
     },
     btnStyle:{
         backgroundColor:COLORS.facebook1,
-        width:wp(40),
-        marginLeft:wp(6.5),
-        borderRadius:wp(4)
+        width:wp(30),
+        height:hp(6),
+        marginLeft:wp(14),
+        borderRadius:wp(2)
     }
 })

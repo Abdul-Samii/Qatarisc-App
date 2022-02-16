@@ -6,6 +6,8 @@ export const COLORS = {
     facebook1:"#0094B5",
     facebook2:"#04b4db",
 
+    profile:'#F0F6F8',
+    font1:'#555555',
     google1:"#FF5151",
     
     comment1:"#F0F6F8",

@@ -33,7 +33,7 @@ const BottomTabs = () => {
         {
           iconName= 'ios-chatbubbles-outline'
           return <View style={{flexDirection:'row'}}><ICONS.Ionicons name={iconName} size={25} color={color} />
-          <Text style={{backgroundColor:COLORS.red1,color:COLORS.white,width:wp(5),height:hp(2.5),fontSize:13,fontWeight:'bold',textAlign:'center',borderRadius:10,marginLeft:wp(-3)}}>2</Text>
+          <Text style={{backgroundColor:COLORS.google1,color:COLORS.white,width:wp(4),height:hp(2),fontSize:10,fontWeight:'bold',textAlign:'center',borderRadius:10,marginLeft:wp(-3)}}>2</Text>
           </View>
 
         }
@@ -45,7 +45,8 @@ const BottomTabs = () => {
         return <Text ><ICONS.Ionicons name={iconName} size={25} color={color} /></Text>
      
       },
-      tabBarActiveTintColor: COLORS.facebook1,
+      tabBarActiveTintColor: COLORS.white,
+      tabBarActiveBackgroundColor:COLORS.facebook1,
     //   tabBarInactiveTintColor: COLORS.google1,
       // tabBarStyle: {
       //   backgroundColor: COLORS.white
