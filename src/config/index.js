@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Store } from '../store/Store'
 
-const baseURL = 'http://192.168.100.8:9000/user/';
+const baseURL = 'http://192.168.43.143:9000/user/';
 
 export const httpRequest = axios.create({
     baseURL:baseURL,

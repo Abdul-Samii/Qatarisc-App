@@ -13,22 +13,21 @@ const NewPost = (props) =>{
     const [text,setText] = useState()
     const [modal,setModal] = useState(false)
     const [userId,setUserIs] = useState("1223abc")
-    const [image,setImage] = useState()
+    const [images,setImage] = useState()
 
 
     const handleType=()=>{
         setType(!type);
     }
-    console.log(image)
 
     const newPost=()=>{
         const obj={
             text,
-            userId
+            userId,
+            images
         }
         props.CreatePost(obj);
     }
-    console.log(text)
 
 
     const handleCamera=async()=>{
@@ -119,7 +118,6 @@ const NewPost = (props) =>{
 
 
 const mapStateToProps = props => {
-    // console.log("HERE "+props.user.users)
     return {
         msg:  props.user.msg
       

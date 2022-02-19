@@ -1,27 +1,41 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {View, Text, StyleSheet, TouchableOpacity, Modal, Image,ScrollView, FlatList} from 'react-native'
 import { HeaderHome } from '../../components'
 import { COLORS, hp, wp,ICONS, IMAGES } from '../../constants'
 import { Comments, NewPost } from '../components'
 
-const Home = ({navigation}) =>{
+import { GetAllPosts } from '../../store/actions'
+import { connect } from 'react-redux'
+
+const Home = (props) =>{
     const [commentOpen,setCommentOpen] = useState(false);
     const [modal,setModal] = useState(false)
     const [like,setLike] = useState(false)
     const [likenum,setLikenum] = useState()
 
-    const posts = [
+    const postss = [
         {dp:IMAGES.user1,username:"James Bond",time:"23 Min",postText:"An unused brand new bicycle is for giveaway. Please comment below",postImg:IMAGES.cycle,likes:12,comments:6},
         {dp:IMAGES.user1,username:"James Bond",time:"23 Min",postText:"An unused brand new bicycle is for giveaway. Please comment below",postImg:IMAGES.cycle,likes:12,comments:5},
         {dp:IMAGES.user1,username:"James Bond",time:"23 Min",postText:"An unused brand new bicycle is for giveaway. Please comment below",postImg:IMAGES.background1,likes:12,comments:4},
         
     ]
+    
+    const posts = props.postt
     const comments = [
         {dp:IMAGES.user1,username:"James Bond",time:"23 Min",commentText:"Hi there, I am intrested kindly DM me.",postImg:IMAGES.background1,likes:12},
         {dp:IMAGES.user1,username:"James Bond",time:"1h",commentText:"Hi there, I am intrested kindly DM me.",postImg:IMAGES.background1,likes:12},
         {dp:IMAGES.user1,username:"James Bond",time:"2h",commentText:"Hi there, I am intrested kindly DM me.",postImg:IMAGES.background1,likes:12},
         
     ]
+
+    const getPosts=async()=>{
+         await props.GetAllPosts()
+    }
+
+useEffect(()=>{
+        getPosts()
+},[])
+    console.log("ooooooooooooooooooooooooooooooo",posts)
 
     const handleComments=()=>{
         setCommentOpen(!commentOpen);
@@ -36,7 +50,11 @@ const Home = ({navigation}) =>{
     const LikeCount=(item)=>{
         setLikenum(item.likes)
     }
+
+
+    //FlatList Posts
     const handleFlatlist=(item)=>{
+        // console.log("ITEMMMMMMMMMMMMMMMMM------------------------------------",item)
         // LikeCount(item)
         return(
             <View style={Styles.post}>
@@ -44,18 +62,19 @@ const Home = ({navigation}) =>{
                 <View style={Styles.flex}>
                     <Image source={item.dp} style={Styles.userdp}/>
                     <View style={Styles.name}>
-                        <TouchableOpacity onPress={()=>navigation.navigate('othersprofile')}>
-                            <Text style={Styles.namePost}>{item.username}</Text>
+                        <TouchableOpacity onPress={()=>props.navigation.navigate('othersprofile')}>
+                            <Text style={Styles.namePost}>{item.userId}</Text>
                         </TouchableOpacity>
                         <Text style={Styles.timePost}>{item.time}</Text>
                     </View>
-                    <TouchableOpacity onPress={()=>handleModal()}>
-                        <ICONS.Entypo name="dots-three-horizontal" size={17} style={{marginTop:hp(1.2),marginLeft:wp(40)}}/>
+                    <TouchableOpacity onPress={()=>handleModal()} style={{marginTop:hp(1.2),position:'absolute',marginLeft:wp(80)}}>
+                        <ICONS.Entypo name="dots-three-horizontal" size={17} />
                     </TouchableOpacity>
-                    <ICONS.Entypo name="cross" size={17} style={{marginTop:hp(1),marginLeft:wp(4)}}/>
-
+                    <TouchableOpacity style={{marginTop:hp(1),position:'absolute',marginLeft:wp(90)}}>
+                    <ICONS.Entypo name="cross" size={17} />
+                    </TouchableOpacity>
                 </View>
-                <Text style={Styles.postText}>{item.postText}</Text>
+                <Text style={Styles.postText}>{item.text}</Text>
 
                 {item.postImg&&<Image source={item.postImg} style={Styles.postImg}/>}
 
@@ -90,6 +109,15 @@ const Home = ({navigation}) =>{
             </View>
         )
     }
+
+//Flatlist
+
+
+
+
+
+
+
     return(
         <View style={Styles.container}>
             <HeaderHome/>
@@ -99,14 +127,14 @@ const Home = ({navigation}) =>{
                 style={{marginTop:hp(5)}}
             />
             <View>
-            <FlatList
+                <Text>{posts.text}</Text>
+          <FlatList
                 data={posts}
-                keyExtractor={(item)=>item.comments}
+                keyExtractor={(item)=>item._id}
                 renderItem={(data)=>handleFlatlist(data.item)}
             />
             </View>
             </ScrollView>
-
             <Modal visible={modal} transparent>
                 
                 <View style={Styles.modalContainer}>
@@ -154,7 +182,15 @@ const Home = ({navigation}) =>{
     )
 }
 
-export default Home
+
+const mapStateToProps=props=>{
+    // console.log("****************",props.user.posts.text)
+      return {
+          postt : props.user.posts
+      }
+}
+
+export default connect(mapStateToProps,{GetAllPosts})(Home)
 
 const Styles = StyleSheet.create({
     container:{
