@@ -12,7 +12,7 @@ const NewPost = (props) =>{
     const [type,setType] = useState(true)
     const [text,setText] = useState()
     const [modal,setModal] = useState(false)
-    const [userId,setUserIs] = useState("1223abc")
+    const [userId,setUserIs] = useState("6211ee121233c42bacc5174a")
     const [images,setImage] = useState()
 
 

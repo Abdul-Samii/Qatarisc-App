@@ -22,6 +22,15 @@ export const userReducer = (state=initialState,{type,payload})=>{
             return {...state,isLoading:false,posts:payload}
         case types.GET_POST_FAILED:
             return {...state,isLoading:false}
+
+
+
+        case types.ADD_COMMENT_START:
+            return {...state,isLoading:true}
+        case types.ADD_COMMENT_SUCCESS:
+            return {...state,isLoading:false}
+        case types.ADD_COMMENT_FAILED:
+            return {...state,isLoading:false}
         default:
             return state; 
     }

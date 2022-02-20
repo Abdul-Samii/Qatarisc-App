@@ -4,7 +4,7 @@ import { HeaderHome } from '../../components'
 import { COLORS, hp, wp,ICONS, IMAGES } from '../../constants'
 import { Comments, NewPost } from '../components'
 
-import { GetAllPosts } from '../../store/actions'
+import { GetAllPosts,LikePost } from '../../store/actions'
 import { connect } from 'react-redux'
 
 const Home = (props) =>{
@@ -12,6 +12,8 @@ const Home = (props) =>{
     const [modal,setModal] = useState(false)
     const [like,setLike] = useState(false)
     const [likenum,setLikenum] = useState()
+    const [userId,setUserId] = useState("6212034428bcb0a60378019e")
+    const [postId,setPostId] = useState()
 
     const postss = [
         {dp:IMAGES.user1,username:"James Bond",time:"23 Min",postText:"An unused brand new bicycle is for giveaway. Please comment below",postImg:IMAGES.cycle,likes:12,comments:6},
@@ -31,6 +33,15 @@ const Home = (props) =>{
     const getPosts=async()=>{
          await props.GetAllPosts()
     }
+    const handleLike=async()=>{
+        console.log(postId)
+        const obj = {
+            userId,
+            postId
+        }
+        await props.LikePost(obj)
+        setLike(!like)
+    }
 
 useEffect(()=>{
         getPosts()
@@ -43,14 +54,7 @@ useEffect(()=>{
     const handleModal=()=>{
         setModal(!modal);
     }
-    const handleLike=(item)=>{
-        setLike(!like);
-
-    }
-    const LikeCount=(item)=>{
-        setLikenum(item.likes)
-    }
-
+    
 
     //FlatList Posts
     const handleFlatlist=(item)=>{
@@ -60,12 +64,12 @@ useEffect(()=>{
             <View style={Styles.post}>
                 
                 <View style={Styles.flex}>
-                    <Image source={item.dp} style={Styles.userdp}/>
+                    <Image source={IMAGES.user1} style={Styles.userdp}/>
                     <View style={Styles.name}>
                         <TouchableOpacity onPress={()=>props.navigation.navigate('othersprofile')}>
-                            <Text style={Styles.namePost}>{item.userId}</Text>
+                            <Text style={Styles.namePost}>{item.users[0].name}</Text>
                         </TouchableOpacity>
-                        <Text style={Styles.timePost}>{item.time}</Text>
+                        <Text style={Styles.timePost}>{item.createdAt}</Text>
                     </View>
                     <TouchableOpacity onPress={()=>handleModal()} style={{marginTop:hp(1.2),position:'absolute',marginLeft:wp(80)}}>
                         <ICONS.Entypo name="dots-three-horizontal" size={17} />
@@ -76,13 +80,15 @@ useEffect(()=>{
                 </View>
                 <Text style={Styles.postText}>{item.text}</Text>
 
-                {item.postImg&&<Image source={item.postImg} style={Styles.postImg}/>}
+               {item.images&&<Image source={{uri:'item.images[0]'}} style={Styles.postImg}/>}
 
 
                 <View style={Styles.likeComment}>
                     
-                    <ICONS.AntDesign name="like2" size={15} style={Styles.likes} /><Text style={Styles.total}>{likenum}</Text>
-                    <ICONS.AntDesign name="message1" size={14} style={Styles.comments} /><Text style={Styles.total}>{item.comments}</Text>
+                    <TouchableOpacity>
+                        <ICONS.AntDesign name="like2" size={15} style={Styles.likes} /><Text style={Styles.total}>{item.likes.length}</Text>
+                    </TouchableOpacity>
+                    <ICONS.AntDesign name="message1" size={14} style={Styles.comments} /><Text style={Styles.total}>{item.comments.length}</Text>
 
                 </View>
                 
@@ -91,7 +97,11 @@ useEffect(()=>{
                     style={{borderWidth:0.19,opacity:0.1,marginTop:hp(2)}}
                 />
                 <View style={{...Styles.likeComment,marginLeft:wp(0)}}>
-                    <TouchableOpacity onPress={()=>handleLike()} style={Styles.likeComment}>
+                    <TouchableOpacity onPress={()=>{
+                        setPostId(item._id)
+                        handleLike()
+                    
+                    }} style={Styles.likeComment}>
                             <ICONS.AntDesign name={like?"like1":"like2"} color={like&&COLORS.facebook1}  size={22} style={Styles.likes} />
                             <Text style={Styles.iconlikeText}>Like</Text>
                    </TouchableOpacity>
@@ -104,8 +114,8 @@ useEffect(()=>{
                 <View
                     style={{borderWidth:0.2,opacity:0.3,marginTop:hp(2)}}
                 />
-
-                {commentOpen&&<Comments comments={comments}/>}                
+{/* //COMMENTS************************ */}
+                {commentOpen&&<Comments itemComment={item.comments} post={item._id} heading="recent comments"/>}                
             </View>
         )
     }
@@ -190,7 +200,7 @@ const mapStateToProps=props=>{
       }
 }
 
-export default connect(mapStateToProps,{GetAllPosts})(Home)
+export default connect(mapStateToProps,{GetAllPosts,LikePost})(Home)
 
 const Styles = StyleSheet.create({
     container:{
