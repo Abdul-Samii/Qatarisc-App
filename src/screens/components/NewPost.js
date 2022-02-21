@@ -14,7 +14,7 @@ const NewPost = (props) =>{
     const [type,setType] = useState(true)
     const [text,setText] = useState()
     const [modal,setModal] = useState(false)
-    const [userId,setUserIs] = useState("6211ee121233c42bacc5174a")
+    const [userId,setUserIs] = useState("621387d9d1c5d1aae29600aa")
     const [images,setImage] = useState()
 
 
@@ -25,7 +25,7 @@ const NewPost = (props) =>{
     const newPost=()=>{
         const obj={
             text,
-            userId,
+            users:userId,
             images
         }
         props.CreatePost(obj);
@@ -58,8 +58,28 @@ const NewPost = (props) =>{
         handleModal()
     }
     const handleGallery=async()=>{
-        const result = await launchImageLibrary({mediaType:'mix'})
-        setImage(result)
+        launchImageLibrary({quality:0.5},(fileobj)=>{
+            console.log("IMAGES ",fileobj)
+                const uploadTask =  storage().ref().child(`/items/${Date.now()}`).putFile(fileobj.assets[0].uri)
+                        uploadTask.on('state_changed', 
+                (snapshot) => {
+                    
+                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    if(progress==100){alert("Uploaded!")}
+                    
+                }, 
+                (error) => {
+                    alert("Something went wrong")
+                }, 
+                () => {
+                    
+                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                    setImage(downloadURL)
+                    });
+                }
+                );
+        
+             })
         handleModal()
     }
 

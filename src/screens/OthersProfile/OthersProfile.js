@@ -1,16 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {View, Text, StyleSheet, Image,ScrollView} from 'react-native'
+import { connect } from 'react-redux'
 import { Button, Header } from '../../components'
 import { COLORS, hp, ICONS, IMAGES, wp } from '../../constants'
+import { GetUsersPosts } from '../../store/actions'
 import { Comments } from '../components'
 
-const OthersProfile = () =>{
+const OthersProfile = (props) =>{
     const comments1 = [
         {username:"James Bond",time:"5h",commentText:"Hi there, I am intrested kindly DM me.",postImg:IMAGES.background1,likes:12},
         {username:"James Bond",time:"1h",commentText:"Hi there, I am intrested kindly DM me.",postImg:IMAGES.background1,likes:12},
         {username:"James Bond",time:"2h",commentText:"Hi there, I am intrested kindly DM me.",postImg:IMAGES.background1,likes:12},
         
     ]
+    const {user} = props.route.params
+    
+    const handlePost=async()=>{
+        const obj={
+            userId:user._id
+        }
+            await props.GetUsersPosts(obj)
+    }
+    useEffect(()=>{
+        handlePost()
+    },[])
     return(
         <ScrollView style={Styles.container}>
             <Header title="PROFILE"/>
@@ -18,9 +31,9 @@ const OthersProfile = () =>{
             <View style={Styles.dpArea}>
                 <Image source={IMAGES.user1} style={Styles.userdp}/>
                 <View style={Styles.details}>
-                    <Text style={Styles.name}>Gian Lorenzo Oyales</Text>
-                    <Text style={Styles.bio}>Nurse By Day, Wanderer By Night</Text>
-                    <Text style={Styles.ig}>IG : Gianlorenzo</Text>
+                    <Text style={Styles.name}>{user.name}</Text>
+                    <Text style={Styles.bio}>{user.bio}</Text>
+                    <Text style={Styles.ig}>IG : {user.instagram}</Text>
                 </View>
             </View>
 
@@ -42,22 +55,30 @@ const OthersProfile = () =>{
 {/* Follower */}
         <View style={Styles.followingData}>
             <View style={Styles.item}>
-                <Text style={Styles.number}>83</Text>
+                <Text style={Styles.number}>{user.posts.length}</Text>
                 <Text style={Styles.numberTitle}>Posts</Text>
             </View>
             <View style={Styles.item}>
-                <Text style={Styles.number}>221</Text>
+                <Text style={Styles.number}>{user.followers.length}</Text>
                 <Text style={Styles.numberTitle}>Followers</Text>
             </View>
             <View style={Styles.item}>
-                <Text style={Styles.number}>9</Text>
+                <Text style={Styles.number}>{user.followings.length}</Text>
                 <Text style={Styles.numberTitle}>Following</Text>
             </View>
         </View>
 
 {/* posts & comments */}
         <View style={Styles.commentCard}>
-            <Comments heading="Recent Posts & Comments" commentCount="90 Comments" comments={comments1}/>
+
+        {
+            props.posts.map((item,index)=>{
+
+                (item.isPost)==true&&<Comments heading="Recent Posts & Comments" commentCount="90 Comments" comments={comments1}/>
+            })
+        }
+
+            
             <View style={{flexDirection:'row',height:hp(6)}}>
                     <ICONS.AntDesign name="switcher" size={14} style={Styles.viewAll} />
                     <Text style={{...Styles.viewAll,marginLeft:wp(1),marginTop:hp(1.7)}}>View All</Text>
@@ -67,7 +88,13 @@ const OthersProfile = () =>{
     )
 }
 
-export default OthersProfile
+const mapStateToProps=props=>{
+    // console.log("****************",props.user.posts)
+      return {
+          posts : props.user.posts
+      }
+}
+export default connect(mapStateToProps,{GetUsersPosts})(OthersProfile)
 
 const Styles = StyleSheet.create({
     container:{

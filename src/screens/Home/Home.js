@@ -46,7 +46,7 @@ const Home = (props) =>{
 useEffect(()=>{
         getPosts()
 },[])
-    console.log("ooooooooooooooooooooooooooooooo",posts)
+    // console.log("ooooooooooooooooooooooooooooooo",posts[0].users[0].name)
 
     const handleComments=()=>{
         setCommentOpen(!commentOpen);
@@ -66,8 +66,8 @@ useEffect(()=>{
                 <View style={Styles.flex}>
                     <Image source={IMAGES.user1} style={Styles.userdp}/>
                     <View style={Styles.name}>
-                        <TouchableOpacity onPress={()=>props.navigation.navigate('othersprofile')}>
-                            <Text style={Styles.namePost}>{item.users.name}</Text>
+                        <TouchableOpacity onPress={()=>props.navigation.navigate('othersprofile',{user:item.users[0]})}>
+                            <Text style={Styles.namePost}>ooo</Text>
                         </TouchableOpacity>
                         <Text style={Styles.timePost}>{item.createdAt}</Text>
                     </View>

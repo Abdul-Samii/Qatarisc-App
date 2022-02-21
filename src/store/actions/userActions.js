@@ -34,7 +34,7 @@ export const GetAllPosts = (data)=>async dispatch=>{
     try{
         dispatch({type:types.GET_POST_START});
         let queryData = qs.stringify(data);
-        const response = await httpRequest.get('user/post',data);
+        const response = await httpRequest.get('user/post',queryData);
         const result = response.data;
         // console.log("here",result)
         dispatch({type:types.GET_POST_SUCCESS,payload:result});
@@ -42,6 +42,24 @@ export const GetAllPosts = (data)=>async dispatch=>{
     catch(err)
     {
         dispatch({type:types.GET_POST_FAILED});
+    }
+}
+
+//Get Users Posts
+export const GetUsersPosts = (data)=>async dispatch=>{
+
+    try{
+        dispatch({type:types.GET_POST_START});
+        let queryData = qs.stringify(data);
+        const response = await httpRequest.post('user/GetUserPost',queryData);
+        const result = response.data;
+        // console.log("here",result)
+        dispatch({type:types.GET_POST_SUCCESS,payload:result});
+    }
+    catch(err)
+    {
+        dispatch({type:types.GET_POST_FAILED});
+        console.log("______________________________ ",err)
     }
 }
 
