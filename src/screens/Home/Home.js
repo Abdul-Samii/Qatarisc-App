@@ -67,7 +67,7 @@ useEffect(()=>{
                     <Image source={IMAGES.user1} style={Styles.userdp}/>
                     <View style={Styles.name}>
                         <TouchableOpacity onPress={()=>props.navigation.navigate('othersprofile')}>
-                            <Text style={Styles.namePost}>{item.users[0].name}</Text>
+                            <Text style={Styles.namePost}>{item.users.name}</Text>
                         </TouchableOpacity>
                         <Text style={Styles.timePost}>{item.createdAt}</Text>
                     </View>
@@ -80,7 +80,7 @@ useEffect(()=>{
                 </View>
                 <Text style={Styles.postText}>{item.text}</Text>
 
-               {item.images&&<Image source={{uri:'item.images[0]'}} style={Styles.postImg}/>}
+               {item.images&&<Image source={{uri:'https://firebasestorage.googleapis.com/v0/b/qatarisc-images.appspot.com/o/items%2F1645427975812?alt=media&token=eea0665f-a6e2-40f5-ac50-daf5bb2d7131'}} style={Styles.postImg}/>}
 
 
                 <View style={Styles.likeComment}>

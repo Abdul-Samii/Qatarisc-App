@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {View, Text, StyleSheet, TouchableOpacity, TextInput, Image,ScrollView, FlatList} from 'react-native'
 import { connect } from 'react-redux'
-import { LikeComment,NewComment } from '../../store/actions'
+import { LikeComment,NewComment,GetUser } from '../../store/actions'
 import { COLORS, hp, wp,ICONS, IMAGES } from '../../constants'
 
 const Comments = (props) =>{
 const {itemComment,post,heading} = props;
-console.log("________________________________",itemComment)
+// console.log("________________________________",itemComment)
 const [userId,setUserId] = useState("62127f8e7871cafa90809ebe")
 const [newcomment,setNewcomment] = useState()
 
@@ -30,10 +30,21 @@ const handleNewComment=()=>{
     }
     props.NewComment(obj)
 }
+const handleGetUser=(id)=>{
+                console.log("________________________________",id)
 
+    const obj ={
+        userId:id[0]
+    }
+    props.GetUser(obj)
+}
+// useEffect(()=>{
+//     handleGetUser()
+// },[])
 
     const handleFlatlist=(item)=>{
-            console.log("________________________________",item)
+            // console.log("________________________________",item)
+            // handleGetUser(item.user)
 
         return(
            
@@ -42,7 +53,7 @@ const handleNewComment=()=>{
                 <View style={{flexDirection:'row'}}>
                     <Image source={item.dp} style={Styles.commentdp}/>
                     <View style={Styles.commentContainer}>
-                        <Text style={Styles.commentName}>{item.user.name}</Text>
+                        <Text style={Styles.commentName}>{props.user.name}</Text>
                         <Text style={Styles.commentText}>{item.text}</Text>
                     </View>
                 </View>
@@ -100,12 +111,13 @@ const handleNewComment=()=>{
 
 
 const mapStateToProps=props=>{
-    // console.log("****************",props.user.posts.text)
+    // console.log("****************",props.user)
       return {
-          postt : props.user.posts
+          postt : props.user.posts,
+          user:props.user.user,
       }
 }
-export default connect(mapStateToProps,{LikeComment,NewComment})(Comments)
+export default connect(mapStateToProps,{LikeComment,NewComment,GetUser})(Comments)
 
 const Styles = StyleSheet.create({
    commentdp:{

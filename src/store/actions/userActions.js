@@ -46,6 +46,26 @@ export const GetAllPosts = (data)=>async dispatch=>{
 }
 
 
+//Get User
+export const GetUser = (data)=>async dispatch=>{
+    try{
+        dispatch({type:types.GET_USER_START});
+        let queryData = qs.stringify(data);
+        console.log("here",queryData)
+
+        const response = await httpRequest.post('user/getuser',queryData);
+        const result = response.data;
+        // console.log("here",result)
+        dispatch({type:types.GET_USER_SUCCESS,payload:result});
+    }
+    catch(err)
+    {
+        dispatch({type:types.GET_USER_FAILED});
+        console.log("___________________________FAILED ",err)
+    }
+}
+
+
 //Like/Unlike a Post
 export const LikePost=(data)=>async dispatch=>{
 

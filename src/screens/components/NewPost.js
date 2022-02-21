@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 import { CreatePost } from '../../store/actions';
 import { launchCamera,launchImageLibrary } from 'react-native-image-picker'
 
-
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import storage from '@react-native-firebase/storage';
 
 const NewPost = (props) =>{
     const [type,setType] = useState(true)
@@ -31,8 +33,28 @@ const NewPost = (props) =>{
 
 
     const handleCamera=async()=>{
-        const result = await launchCamera({mediaType:'mix'})
-        setImage(result)
+        launchCamera({quality:0.5},(fileobj)=>{
+        console.log("IMAGES ",fileobj)
+            const uploadTask =  storage().ref().child(`/items/${Date.now()}`).putFile(fileobj.assets[0].uri)
+                    uploadTask.on('state_changed', 
+            (snapshot) => {
+                
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                if(progress==100){alert("Uploaded!")}
+                
+            }, 
+            (error) => {
+                alert("Something went wrong")
+            }, 
+            () => {
+                
+                uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                setImage(downloadURL)
+                });
+            }
+            );
+    
+         })
         handleModal()
     }
     const handleGallery=async()=>{

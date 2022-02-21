@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1085376493848",
+    "project_id": "qatarisc-images",
+    "storage_bucket": "qatarisc-images.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085376493848:android:f2f0b19c6cd8a69bba466d",
+        "android_client_info": {
+          "package_name": "com.qatarisc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085376493848-p5jq0oho4htqadf1vj35i5rj8ptvf69t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6uVMsh9d8K8GTU34_GfeheChxutDQt3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085376493848-p5jq0oho4htqadf1vj35i5rj8ptvf69t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
