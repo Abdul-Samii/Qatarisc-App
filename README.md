@@ -1,3 +1,3 @@
- **Qatarisc-Android**
+ **Qatarisc-Android** <br />
 Qatarisc is an android app build in react-native cli. Its a social media application, user can log into the app only through facebook login. User can create a post and that post can be liked and commented by other users, the comment can also be like by users. User have the ability to edit his/her profile as well. User can view others profile just like we do in facebook. There are two other features which were not completed these are chat functionality and notitification functionality, these are hard coded for now, the front end design is implemented.
 The client wanted to create an app for the people of qatar using which they can sell products, the main idea of client was to add post ability on user and other users on that platform can reach him out using inbox.
